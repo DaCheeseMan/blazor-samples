@@ -74,7 +74,7 @@ builder.Services.AddAuthentication(MS_OIDC_SCHEME)
         // the Entra or Azure portal where the web API is exposed). For any other
         // identity provider, use the appropriate scope.
 
-        oidcOptions.Scope.Add("{APP ID URI}/Weather.Get");
+        oidcOptions.Scope.Add("Weather.Get");
         // ........................................................................
 
         // ........................................................................
@@ -86,14 +86,15 @@ builder.Services.AddAuthentication(MS_OIDC_SCHEME)
         // single-tenant apps, but it requires a custom IssuerValidator as shown 
         // in the comments below. 
 
-        oidcOptions.Authority = "https://login.microsoftonline.com/{TENANT ID}/v2.0/";
+        oidcOptions.Authority = "http://localhost:8080/realms/weather";
+        oidcOptions.RequireHttpsMetadata = false;
         // ........................................................................
 
         // ........................................................................
         // Set the Client ID for the app. Set the {CLIENT ID} placeholder to
         // the Client ID.
 
-        oidcOptions.ClientId = "{CLIENT ID}";
+        oidcOptions.ClientId = "weatherapi";        
         // ........................................................................
 
         // ........................................................................
