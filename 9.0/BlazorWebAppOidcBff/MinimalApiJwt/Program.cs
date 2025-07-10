@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
@@ -23,7 +26,17 @@ builder.Services.AddAuthentication()
         // Audience format {AUDIENCE} for ME-ID tenant type: api://{CLIENT ID}
         // Audience format {AUDIENCE} for B2C tenant type: https://{DIRECTORY NAME}.onmicrosoft.com/{CLIENT ID}
         //
-        jwtOptions.Audience = "account";
+        jwtOptions.Audience = "weatherapi";
+
+        jwtOptions.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                System.Diagnostics.Debug.WriteLine("Authentication failed: " + context.Exception.Message);
+                return Task.CompletedTask;
+            }
+        };
+
     });
 builder.Services.AddAuthorization();
 
