@@ -9,6 +9,7 @@ var weatherApi = builder.AddProject<Projects.MinimalApiJwt>("weatherapi")
     .WaitFor(keycloak);
 
 builder.AddProject<Projects.BlazorWebAppOidc>("blazorfrontend")
-    .WithReference(weatherApi);
+    .WithReference(weatherApi)
+    .WaitFor(keycloak);
 
 builder.Build().Run();
